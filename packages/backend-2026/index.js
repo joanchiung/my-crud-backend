@@ -56,6 +56,25 @@ app.post("/api/todos", async (req, res) => {
   }
 });
 
+// 修改待辦事項 (Update)
+app.put("/api/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, completed } = req.body;
+
+    const queryText =
+      "UPDATE todos SET title = $1, completed = $2 WHERE id = $3 RETURNING *";
+    const result = await pool.query(queryText, [title, completed, id]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "找不到該筆資料" });
+    }
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 // --- 啟動伺服器 ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
