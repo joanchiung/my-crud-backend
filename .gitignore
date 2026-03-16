@@ -1,3 +1,18 @@
+# 依賴套件
 node_modules/
+
+# 環境變數 (非常重要，保護你的資料庫密碼)
 .env
+.env.local
+
+# 作業系統產生的檔案
 .DS_Store
+Thumbs.db
+
+# 編譯輸出的檔案 (如果你之後用 TypeScript)
+dist/
+build/
+
+# 日誌檔案
+*.log
+npm-debug.log*
