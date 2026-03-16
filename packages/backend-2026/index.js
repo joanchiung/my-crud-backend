@@ -15,6 +15,11 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+// --- 路由定義區 ---
+app.get("/", (req, res) => {
+  res.json({ message: "伺服器運作中！" });
+});
+
 app.get("/api/health", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
@@ -31,11 +36,27 @@ app.get("/api/todos", async (req, res) => {
     const result = await pool.query("SELECT * FROM todos ORDER BY id ASC");
     res.json(result.rows);
   } catch (err) {
-    console.error(err.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
+// 新增待辦事項 (Create)
+app.post("/api/todos", async (req, res) => {
+  try {
+    const { title } = req.body;
+
+    const queryText = "INSERT INTO todos (title) VALUES ($1) RETURNING *";
+    const result = await pool.query(queryText, [title]);
+
+    console.log("成功新增一筆資料：", result.rows[0]);
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    console.error("新增失敗：", err.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// --- 啟動伺服器 ---
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
