@@ -1,0 +1,26 @@
+{
+  "name": "my-backend-orm",
+  "version": "1.0.0",
+  "description": "Todo List Backend with Drizzle ORM",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "author": "joanChang",
+  "license": "ISC",
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "drizzle-orm": "^0.45.2",
+    "express": "^5.2.1",
+    "postgres": "^3.4.8",
+    "swagger-ui-express": "^5.0.1",
+    "yaml": "^2.8.3"
+  }
+}
