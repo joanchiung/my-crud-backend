@@ -13,11 +13,11 @@
   "author": "joanChang",
   "license": "ISC",
   "devDependencies": {
-    "drizzle-kit": "^0.31.10"
+    "drizzle-kit": "^0.30.6"
   },
   "dependencies": {
     "cors": "^2.8.6",
-    "drizzle-orm": "^0.45.2",
+    "drizzle-orm": "^0.39.0",
     "express": "^5.2.1",
     "postgres": "^3.4.8",
     "swagger-ui-express": "^5.0.1",
