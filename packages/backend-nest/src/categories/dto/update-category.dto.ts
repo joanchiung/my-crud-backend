@@ -1,13 +1,4 @@
-import { IsString, IsOptional, MaxLength } from 'class-validator';
+import { PartialType } from '@nestjs/swagger';
+import { CreateCategoryDto } from './create-category.dto.js';
 
-export class UpdateCategoryDto {
-  @IsOptional()
-  @IsString()
-  @MaxLength(100)
-  name?: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(7)
-  color?: string;
-}
+export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {}

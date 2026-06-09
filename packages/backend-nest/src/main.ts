@@ -1,8 +1,24 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module.js';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(process.env.PORT ?? 3000);
+
+  app.setGlobalPrefix('api');
+
+  app.useGlobalPipes(
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+  );
+
+  const config = new DocumentBuilder()
+    .setTitle('Todo API')
+    .setDescription('NestJS CRUD API — Categories & Todos with many-to-many')
+    .setVersion('1.0')
+    .build();
+  SwaggerModule.setup('api-docs', app, SwaggerModule.createDocument(app, config));
+
+  await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
