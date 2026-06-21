@@ -5,9 +5,11 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToMany,
+  ManyToOne,
   JoinTable,
 } from 'typeorm';
 import { Category } from '../categories/category.entity.js';
+import { User } from '../users/user.entity.js';
 
 @Entity('todos')
 export class Todo {
@@ -26,6 +28,9 @@ export class Todo {
   @ManyToMany(() => Category)
   @JoinTable({ name: 'todo_categories' })
   categories!: Category[];
+
+  @ManyToOne(() => User, (user) => user.todos)
+  user!: User;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;

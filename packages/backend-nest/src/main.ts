@@ -9,7 +9,11 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
-    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }),
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
   );
 
   const config = new DocumentBuilder()
@@ -17,7 +21,11 @@ async function bootstrap() {
     .setDescription('NestJS CRUD API — Categories & Todos with many-to-many')
     .setVersion('1.0')
     .build();
-  SwaggerModule.setup('api-docs', app, SwaggerModule.createDocument(app, config));
+  SwaggerModule.setup(
+    'api-docs',
+    app,
+    SwaggerModule.createDocument(app, config),
+  );
 
   await app.listen(process.env.PORT ?? 3001);
 }

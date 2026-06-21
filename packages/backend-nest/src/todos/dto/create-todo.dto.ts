@@ -29,4 +29,8 @@ export class CreateTodoDto {
   @IsArray()
   @IsInt({ each: true })
   categoryIds?: number[];
+
+  @ApiProperty({ example: 1 })
+  @IsInt()
+  userId!: number;
 }
