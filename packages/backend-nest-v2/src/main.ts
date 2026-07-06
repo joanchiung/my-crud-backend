@@ -19,6 +19,7 @@ async function bootstrap() {
     .setTitle('Notes API')
     .setDescription('筆記 CRUD API')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
