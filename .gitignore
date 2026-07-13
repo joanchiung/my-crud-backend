@@ -16,3 +16,6 @@ build/
 # 日誌檔案
 *.log
 npm-debug.log*
+
+# 個人筆記（保留在本機，不上傳）
+notes/
