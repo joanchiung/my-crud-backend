@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Headers, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
+import { Public } from './public.decorator';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { ForgetPasswordDto } from './dto/forget-password.dto';
@@ -10,11 +11,13 @@ import { ForgetPasswordDto } from './dto/forget-password.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
   }
 
+  @Public()
   @Post('login')
   login(@Body() dto: LoginDto) {
     return this.authService.login(dto);
@@ -27,6 +30,7 @@ export class AuthController {
     return this.authService.logout(token);
   }
 
+  @Public()
   @Post('forget-password')
   forgetPassword(@Body() dto: ForgetPasswordDto) {
     return this.authService.forgetPassword(dto);

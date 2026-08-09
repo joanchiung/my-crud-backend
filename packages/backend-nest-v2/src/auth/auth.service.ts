@@ -33,6 +33,18 @@ export class AuthService {
     return authorizationHeader.slice('Bearer '.length);
   }
 
+  // 解 token + 檢查是否已登出，回傳完整 payload（含 sub）供 Guard 查使用者用
+  decodeToken(token: string): JwtPayload {
+    if (this.revokedTokens.has(token)) {
+      throw new UnauthorizedException('token 已登出');
+    }
+    try {
+      return this.jwtService.verify<JwtPayload>(token);
+    } catch {
+      throw new UnauthorizedException('token 無效或已過期');
+    }
+  }
+
   async register(dto: RegisterDto) {
     const existing = await this.usersService.findByEmail(dto.email);
     if (existing) {
@@ -64,20 +76,12 @@ export class AuthService {
   }
 
   verify(token: string) {
-    if (this.revokedTokens.has(token)) {
-      throw new UnauthorizedException('token 已登出');
-    }
-
-    const payload = this.jwtService.verify<JwtPayload>(token);
+    const payload = this.decodeToken(token);
     return { valid: true, email: payload.email };
   }
 
   async me(token: string) {
-    if (this.revokedTokens.has(token)) {
-      throw new UnauthorizedException('token 已登出');
-    }
-
-    const payload = this.jwtService.verify<JwtPayload>(token);
+    const payload = this.decodeToken(token);
     const user = await this.usersService.findById(payload.sub);
     if (!user) {
       throw new NotFoundException('使用者不存在');

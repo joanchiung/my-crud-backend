@@ -23,6 +23,10 @@ export class Note {
   @Column({ nullable: true })
   category!: string;
 
+  // 先設 nullable：等 JwtAuthGuard 接上、create() 能拿到目前使用者後再改成必填
+  @Column({ name: 'owner_id', type: 'int', nullable: true })
+  ownerId!: number | null;
+
   @CreateDateColumn()
   createdAt!: Date;
 
