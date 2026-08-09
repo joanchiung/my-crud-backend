@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Permission } from '../auth/permission.enum';
 
 @Entity('users')
 export class User {
@@ -20,6 +21,10 @@ export class User {
 
   @Column({ default: 'active' })
   status!: string;
+
+  // Postgres 原生 enum 陣列：DB 層就會擋掉不合法的權限字串，不用只靠應用層檢查
+  @Column({ type: 'enum', enum: Permission, array: true, default: [] })
+  permissions!: Permission[];
 
   @Column({ name: 'last_login_at', type: 'timestamp', nullable: true })
   lastLoginAt!: Date | null;
