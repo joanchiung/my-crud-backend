@@ -4,4 +4,5 @@ export enum Permission {
   NotesReadAll = 'notes:read-all',
   NotesUpdate = 'notes:update',
   NotesDelete = 'notes:delete',
+  UsersManagePermissions = 'users:manage-permissions',
 }
